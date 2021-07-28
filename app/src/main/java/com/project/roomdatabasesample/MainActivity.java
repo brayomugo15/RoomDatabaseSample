@@ -29,18 +29,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get a new or existing ViewModel from the ViewModelProvider.
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         final WordListAdapter adapter = new WordListAdapter(new WordListAdapter.WordDiff());
         recyclerView.setAdapter(adapter);
-
-        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // Add an observer on the LiveData returned by getAlphabetizedWords.
+        // The onChanged() method fires when the observed data changes and the activity is
+        // in the foreground.
         mWordViewModel.getAllWords().observe(this, words -> {
             // Update the cached copy of the words in the adapter.
             adapter.submitList(words);
         });
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener( view -> {
+        fab.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, NewWordActivity.class);
             startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
         });
