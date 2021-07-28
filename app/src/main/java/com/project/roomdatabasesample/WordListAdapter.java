@@ -21,7 +21,7 @@ public class WordListAdapter extends ListAdapter<Word, WordViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull WordViewHolder holder, int position) {
         Word current = getItem(position);
-        holder.bind(current.getmWord());
+        holder.bind(current.getWord());
     }
 
     static class WordDiff extends DiffUtil.ItemCallback<Word> {
@@ -33,7 +33,7 @@ public class WordListAdapter extends ListAdapter<Word, WordViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull Word oldItem, @NonNull Word newItem) {
-            return oldItem.getmWord().equals(newItem.getmWord());
+            return oldItem.getWord().equals(newItem.getWord());
         }
     }
 }
